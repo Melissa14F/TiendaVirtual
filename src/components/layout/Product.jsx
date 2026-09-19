@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 import '../../styles/Product.css';
 
 // Relaciona cada tipo de etiqueta de producto con su clase CSS de color.
@@ -9,11 +11,23 @@ const BADGE_CLASS = {
 };
 
 // Tarjeta de producto: se usa en la grilla de catálogo, favoritos y
-// secciones de la portada. Al hacer clic navega al detalle del producto.
+// secciones de la portada. Al hacer clic navega al detalle del producto;
+// el botón "Agregar al carrito" agrega directo, sin pasar por el detalle.
 export default function ProductCard({ product, isFavorite, onToggleFavorite }) {
   const navigate = useNavigate();
+  const { userRole } = useAuth();
+  const { addToCart } = useCart();
+  const outOfStock = product.stock === 'out';
   // Calcula el % de descuento a partir del precio original vs. el actual.
   const discount = product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : 0;
+
+  // Invitados y admins no compran — los manda a iniciar sesión como
+  // cliente, igual que "Agregar al carrito" en el detalle del producto.
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // evita que el clic también dispare la navegación al detalle
+    if (userRole !== 'client') { navigate('/login'); return; }
+    addToCart(product, 1);
+  };
 
   return (
     <div onClick={() => navigate(`/producto/${product.id}`)} className="pc-card">
@@ -69,6 +83,18 @@ export default function ProductCard({ product, isFavorite, onToggleFavorite }) {
             </span>
           )}
         </div>
+
+        <button
+          onClick={handleAddToCart}
+          disabled={outOfStock}
+          className={`pc-add-btn ${outOfStock ? 'pc-add-btn--disabled' : ''}`}
+        >
+          <svg className="icon icon-14 icon-sw-2_5" viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          {outOfStock ? 'Sin stock' : 'Agregar al carrito'}
+        </button>
       </div>
     </div>
   );

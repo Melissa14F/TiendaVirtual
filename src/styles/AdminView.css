@@ -353,6 +353,26 @@
   color: var(--danger);
 }
 
+.adm-retry-btn {
+  display: block;
+  margin: 14px auto 0;
+  padding: 8px 18px;
+  border: 1.5px solid var(--danger);
+  border-radius: 8px;
+  background: none;
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.adm-retry-btn:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
 /* Shared primitives */
 .adm-card {
   background: #fff;

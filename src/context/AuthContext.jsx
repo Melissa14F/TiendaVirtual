@@ -5,37 +5,54 @@ import { createContext, useContext, useState } from 'react';
 // que pasarlo como prop manualmente por todos lados.
 const AuthContext = createContext(null);
 
+const STORAGE_KEY = 'techmarket_session';
+
+const BLANK_SESSION = { userRole: null, userId: null, userName: '', userEmail: '', isPrincipal: false, permissions: [] };
+
+/** Guarda solo lo que ya devuelve login() (rol, id, nombre, email,
+ * permisos) — nunca la contraseña ni su hash. Si localStorage no está
+ * disponible (modo privado, storage bloqueado) simplemente no persiste;
+ * la sesión sigue funcionando en memoria durante esa visita. */
+function loadSession() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? { ...BLANK_SESSION, ...JSON.parse(raw) } : BLANK_SESSION;
+  } catch {
+    return BLANK_SESSION;
+  }
+}
+
+function saveSession(session) {
+  try {
+    if (session.userRole === null) localStorage.removeItem(STORAGE_KEY);
+    else localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+  } catch {
+    // localStorage bloqueado — la sesión no sobrevive un recargo, pero la app sigue andando.
+  }
+}
+
 // Componente que envuelve toda la app (ver main.jsx) y provee los datos
 // de sesión a todos sus hijos.
 export function AuthProvider({ children }) {
-  const [userRole, setUserRole] = useState(null); // 'admin' | 'client' | null (nadie logueado)
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [isPrincipal, setIsPrincipal] = useState(false); // solo aplica a admins
-  const [permissions, setPermissions] = useState([]); // solo aplica a admins no principales
+  // Lee la sesión guardada una sola vez, al montar — así un F5 no saca
+  // al usuario que ya había iniciado sesión.
+  const [session, setSession] = useState(loadSession);
+  const { userRole, userId, userName, userEmail, isPrincipal, permissions } = session;
 
   /** `extra` only carries anything for an admin login (isPrincipal +
    * permissions) — a client login just omits it. */
   // Guarda los datos de la sesión al loguearse. "extra" solo trae algo
   // cuando el que inició sesión es un admin (isPrincipal + permissions).
   const login = (role, id, name, email, extra = {}) => {
-    setUserRole(role);
-    setUserId(id);
-    setUserName(name);
-    setUserEmail(email);
-    setIsPrincipal(extra.isPrincipal ?? false);
-    setPermissions(extra.permissions ?? []);
+    const next = { userRole: role, userId: id, userName: name, userEmail: email, isPrincipal: extra.isPrincipal ?? false, permissions: extra.permissions ?? [] };
+    setSession(next);
+    saveSession(next);
   };
 
   // Limpia todos los datos de sesión al cerrar sesión.
   const logout = () => {
-    setUserRole(null);
-    setUserId(null);
-    setUserName('');
-    setUserEmail('');
-    setIsPrincipal(false);
-    setPermissions([]);
+    setSession(BLANK_SESSION);
+    saveSession(BLANK_SESSION);
   };
 
   return (
