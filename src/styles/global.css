@@ -48,3 +48,16 @@ input::placeholder { color: var(--text-muted); opacity: 0.7; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* Estado genérico de "cargando…" / "hubo un error", reutilizado por
+   varias páginas que no tienen su propio estilo para esto. */
+.app-status {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.app-status--error {
+  color: var(--danger);
+}

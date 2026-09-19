@@ -111,7 +111,9 @@
   font-weight: 400;
   font-family: 'Inter', sans-serif;
   text-align: left;
+  text-decoration: none;
   width: 100%;
+  box-sizing: border-box;
   transition: all 0.15s;
   border-left: 3px solid transparent;
 }
@@ -143,6 +145,7 @@
   align-items: center;
   gap: 10px;
   width: 100%;
+  box-sizing: border-box;
   padding: 10px 12px;
   border-radius: 8px;
   border: none;
@@ -152,6 +155,7 @@
   font-size: 13.5px;
   font-weight: 500;
   font-family: 'Inter', sans-serif;
+  text-decoration: none;
   transition: all 0.15s;
 }
 

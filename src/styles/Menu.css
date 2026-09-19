@@ -1,0 +1,379 @@
+/* ---- Menu (hdr-) — navegación: panel mobile + barra de categorías desktop ---- */
+.hdr-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 199;
+  top: 0;
+}
+
+.hdr-menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+  max-width: 320px;
+  background: #fff;
+  z-index: 200;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+}
+
+.hdr-menu-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--brand-dark);
+}
+
+.hdr-menu-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.hdr-menu-close {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hdr-menu-account-row {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.hdr-menu-account-row--logged {
+  background: rgba(22, 163, 74, 0.04);
+}
+
+.hdr-menu-account-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hdr-menu-account-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.hdr-menu-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hdr-menu-account-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.hdr-menu-logout-link {
+  font-size: 13px;
+  color: var(--danger);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.hdr-menu-login-btn {
+  width: 100%;
+  padding: 11px;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+.hdr-menu-nav-group {
+  padding: 8px 0;
+}
+
+.hdr-menu-nav-group--bordered {
+  border-top: 1px solid var(--border);
+}
+
+.hdr-menu-catalog-label {
+  padding: 8px 20px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.hdr-menu-cat-heading {
+  padding: 6px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.hdr-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.hdr-menu-item:hover {
+  background: var(--bg);
+}
+
+.hdr-menu-item--indent {
+  padding-left: 36px;
+  font-size: 13.5px;
+}
+
+.hdr-menu-item-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.hdr-menu-emoji {
+  font-size: 18px;
+}
+
+.hdr-menu-whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Barra de navegación desktop */
+.hdr-nav-bar {
+  border-top: 1px solid var(--border);
+  background: #fff;
+}
+
+.hdr-nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+.hdr-nav {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.hdr-nav-sep {
+  width: 1px;
+  height: 14px;
+  background: var(--border);
+  margin: 0 2px;
+}
+
+.hdr-nav-cat {
+  display: flex;
+  align-items: center;
+}
+
+.hdr-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+
+.hdr-nav-btn:hover {
+  color: var(--blue);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.hdr-mega-wrap {
+  position: relative;
+}
+
+.hdr-mega-trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.hdr-mega-trigger:hover {
+  color: var(--blue);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.hdr-mega-trigger--open {
+  background: var(--bg);
+  color: var(--brand);
+}
+
+.hdr-mega-trigger--open:hover {
+  color: var(--brand);
+  background: var(--bg);
+}
+
+.hdr-mega-chevron {
+  transition: transform 0.2s;
+}
+
+.hdr-mega-chevron--open {
+  transform: rotate(180deg);
+}
+
+.hdr-mega-panel {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 1px);
+  background: #fff;
+  border-radius: 0 14px 14px 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--border);
+  padding: 24px;
+  width: 680px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  z-index: 200;
+}
+
+/* Between the mobile breakpoint (768px) and ~1024px, the desktop header
+ * is active but there's not enough room to the right of the "Catálogo"
+ * trigger for a 680px panel anchored to it — it ran off the edge of the
+ * screen. Anchoring to the viewport instead of the trigger guarantees it
+ * always fits, regardless of where the trigger happens to sit in the row. */
+@media (max-width: 1024px) {
+  .hdr-mega-panel {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    /* Header.jsx + Menu.jsx together keep the same combined height across
+     * this range (68px topbar row + 38px nav row) — a hand-measured value
+     * instead of a trigger-relative one, since that's exactly what lets
+     * this panel anchor to the viewport instead of the trigger. */
+    top: 106px;
+    width: auto;
+    max-height: calc(100vh - 122px);
+    overflow-y: auto;
+    grid-template-columns: repeat(2, 1fr);
+    border-radius: 14px;
+  }
+}
+
+.hdr-mega-col-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--brand);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.hdr-mega-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 6px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13.5px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.hdr-mega-link:hover {
+  background: rgba(37, 99, 235, 0.06);
+  color: var(--blue);
+}
+
+.hdr-right-links {
+  display: flex;
+  align-items: center;
+}
+
+.hdr-whatsapp-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+}
+
+.hdr-whatsapp-link:hover {
+  color: var(--blue);
+  background: rgba(37, 99, 235, 0.05);
+}

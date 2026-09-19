@@ -1,0 +1,138 @@
+/* ---- CatalogoPage — modo Home (secciones destacadas + franja de confianza) (app-) ---- */
+.app-section {
+  background: var(--bg);
+  padding: 48px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 767px) {
+  .app-section {
+    padding: 28px 16px;
+  }
+}
+
+.app-section--alt {
+  background: #fff;
+}
+
+.app-section-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.app-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 767px) {
+  .app-section-header {
+    margin-bottom: 16px;
+  }
+}
+
+.app-section-title {
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--text);
+  margin: 0 0 4px;
+  letter-spacing: -0.3px;
+}
+
+@media (max-width: 767px) {
+  .app-section-title {
+    font-size: 18px;
+  }
+}
+
+.app-section-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.app-see-all-btn {
+  padding: 8px 18px;
+  border: 1.5px solid var(--blue);
+  border-radius: 8px;
+  background: none;
+  color: var(--blue);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.app-see-all-btn:hover {
+  background: var(--blue);
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .app-see-all-btn {
+    padding: 7px 13px;
+    font-size: 12px;
+  }
+}
+
+.app-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 767px) {
+  .app-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+.app-trust-bar {
+  background: #fff;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 16px;
+}
+
+.app-trust-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.app-trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.app-trust-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(91, 42, 134, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--brand);
+}
+
+.app-trust-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.app-trust-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}

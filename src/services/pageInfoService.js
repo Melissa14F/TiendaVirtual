@@ -1,5 +1,20 @@
 import { apiFetch } from './api';
 
+/** Used only while pageInfo is loading, or if the "informacion" record
+ * hasn't been created in MockAPI yet — keeps Header/Footer from showing
+ * blank contact info on a first run. */
+export const DEFAULT_PAGE_INFO = {
+  storeName: 'TechMarket',
+  tagline: 'Tu tienda de tecnología de confianza',
+  email: 'hola@techmarket.com',
+  phone: '+54 11 4567-8900',
+  address: 'Av. Tecnología 1234, Piso 3',
+  hours: 'Lun–Vie 9:00–18:00 · Sáb 10:00–14:00',
+  whatsapp: '1234567890',
+  facebook: 'techmarket',
+  instagram: 'techmarket.ar',
+};
+
 // Convierte la información de la tienda cruda de MockAPI a la forma que
 // usa la app (Header, Footer, panel de admin).
 function mapPageInfo(i) {

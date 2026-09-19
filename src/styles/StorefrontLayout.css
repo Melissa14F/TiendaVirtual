@@ -1,0 +1,17 @@
+/* ---- StorefrontLayout shell (sfl-) ---- */
+.sfl-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.sfl-main {
+  flex: 1;
+}
+
+/* Deja lugar abajo para que MenuInferior (fija, solo mobile) no tape el
+ * final del contenido. */
+.sfl-main--mobile {
+  padding-bottom: 58px;
+}

@@ -1,0 +1,54 @@
+/* ---- MenuInferior (mif-) — barra de navegación fija abajo, solo mobile ---- */
+.mif-root {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 150;
+  display: flex;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.mif-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px 7px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+}
+
+.mif-item--active {
+  color: var(--brand);
+}
+
+.mif-icon-wrap {
+  position: relative;
+  display: flex;
+}
+
+.mif-badge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  font-size: 9px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
