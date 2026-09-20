@@ -1,6 +1,6 @@
 // URL base de la API — si no hay variable de entorno configurada, queda vacía
 // (las rutas ya empiezan con "/", así que funcionan igual como ruta relativa).
-const API_URL = import.meta.env.VITE_API_URL ?? '';
+const API_URL = 'https://6aa6bc85d7765db985079180.mockapi.io';
 
 /** Normalized shape for every failure apiFetch can throw. */
 // Clase de error personalizada: así cualquier falla de red o de la API (404, 500, etc.)
