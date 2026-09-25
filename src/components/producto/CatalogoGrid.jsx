@@ -40,6 +40,7 @@ export default function CatalogoGrid({ category, searchQuery = '', initialOnlyPr
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [retryKey, setRetryKey] = useState(0);
 
   // "Todos los productos" (home default), "Resultados de búsqueda" (search
   // mode) and "Promociones" (a banner's /promociones link — there's no real
@@ -81,6 +82,7 @@ export default function CatalogoGrid({ category, searchQuery = '', initialOnlyPr
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
+    setError(null);
     getProducts({
       page,
       limit: PAGE_SIZE,
@@ -102,7 +104,7 @@ export default function CatalogoGrid({ category, searchQuery = '', initialOnlyPr
       .catch(err => { if (!cancelled) setError(err.message); })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
-  }, [page, categoriaFilter, searchQuery, priceMin, priceMax, selectedBrands, onlyPromo, sort]);
+  }, [page, categoriaFilter, searchQuery, priceMin, priceMax, selectedBrands, onlyPromo, sort, retryKey]);
 
   // Agrega o quita una marca de la lista de marcas seleccionadas.
   const toggleBrand = (brand) =>
@@ -113,7 +115,12 @@ export default function CatalogoGrid({ category, searchQuery = '', initialOnlyPr
   // Renderiza la grilla de resultados (o el estado de carga/error/vacío) + la paginación.
   const renderResults = (gridClassName) => {
     if (loading) return <div className="cv-status">Cargando productos…</div>;
-    if (error) return <div className="cv-status cv-status--error">No se pudieron cargar los productos.</div>;
+    if (error) return (
+      <div className="cv-status cv-status--error">
+        No se pudieron cargar los productos.
+        <button onClick={() => setRetryKey(k => k + 1)} className="app-status-retry-btn">Reintentar</button>
+      </div>
+    );
     if (products.length === 0) return <EmptyState />;
     return (
       <>

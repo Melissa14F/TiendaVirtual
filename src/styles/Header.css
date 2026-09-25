@@ -57,9 +57,7 @@
   letter-spacing: -0.4px;
 }
 
-.hdr-brand-desktop {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+.hdr-brand-desktop {  font-weight: 800;
   font-size: 19px;
   color: var(--text);
   letter-spacing: -0.5px;
@@ -82,6 +80,13 @@
   cursor: pointer;
   color: var(--text-muted);
   flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.hdr-icon-btn:hover {
+  background: var(--bg);
+  border-color: #CBD5E1;
+  color: var(--text);
 }
 
 .hdr-icon-btn--cart {
@@ -126,6 +131,11 @@
   cursor: pointer;
   flex-shrink: 0;
   transition: background 0.2s;
+}
+
+.hdr-hamburger:hover:not(.hdr-hamburger--open) {
+  background: var(--bg);
+  border-color: #CBD5E1;
 }
 
 .hdr-hamburger--open {
@@ -179,9 +189,7 @@
   border: 1.5px solid var(--brand);
   background: var(--bg);
   font-size: 14px;
-  outline: none;
-  font-family: 'Inter', sans-serif;
-  box-sizing: border-box;
+  outline: none;  box-sizing: border-box;
 }
 
 /* Desktop header */
@@ -225,9 +233,7 @@
   color: var(--text);
   font-size: 14px;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  font-family: 'Inter', sans-serif;
-}
+  transition: border-color 0.2s, box-shadow 0.2s;}
 
 .hdr-search-input--focused {
   border-color: var(--brand);
@@ -252,9 +258,7 @@
   color: var(--text);
   padding: 6px 12px;
   border-radius: 8px;
-  transition: background 0.2s;
-  font-family: 'Inter', sans-serif;
-}
+  transition: background 0.2s;}
 
 .hdr-account-btn:hover {
   background: var(--bg);

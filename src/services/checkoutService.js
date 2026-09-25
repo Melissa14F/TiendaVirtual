@@ -17,7 +17,7 @@ import { incrementUsage as incrementDiscountUsage } from './discountsService';
  * reality. */
 // Valida el stock real, crea el pedido (+ sus líneas) y descuenta el
 // stock de cada producto. Lo usan tanto el carrito como "Comprar ahora".
-export async function placeOrder({ clienteName, items, discountAmount = 0, orderDetails, discountId }) {
+export async function placeOrder({ clienteName, items, discountAmount = 0, shippingAmount = 0, orderDetails, discountId }) {
   const freshProducts = await Promise.all(items.map(item => getProductById(item.id)));
   const shortIndex = freshProducts.findIndex((p, i) => p.stockQty < items[i].qty);
   if (shortIndex !== -1) {
@@ -29,7 +29,8 @@ export async function placeOrder({ clienteName, items, discountAmount = 0, order
     );
   }
 
-  await createOrder({ clienteName, items, ...orderDetails, discountAmount });
+  const order = await createOrder({ clienteName, items, ...orderDetails, discountAmount, shippingAmount });
   await Promise.all(items.map(item => decrementStock(item.id, item.qty)));
   if (discountId) incrementDiscountUsage(discountId).catch(() => {});
+  return order;
 }

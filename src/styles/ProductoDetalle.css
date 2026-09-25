@@ -171,11 +171,19 @@
 .pd-qty-btn {
   background: none;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 18px;
   font-weight: 600;
   color: var(--text);
-  width: 20px;
+  width: 24px;
+  height: 24px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pd-qty-btn:hover {
+  background: var(--bg);
+  color: var(--brand);
 }
 
 .pd-qty-value {

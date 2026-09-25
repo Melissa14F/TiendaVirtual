@@ -108,14 +108,16 @@ export async function cancelOrder(id) {
 // Crea un pedido nuevo junto con sus líneas de detalle (un producto = una
 // línea). El "número de seguimiento" se genera acá y se usa para
 // relacionar ambos (el pedido y sus líneas), siempre arranca en estado "Pendiente".
-export async function createOrder({ clienteName, items, address, postalCode, paymentMethod = 'Tarjeta de crédito', discountAmount = 0 }) {
-  // Calcula el total sumando cada producto (precio x cantidad) y restando el descuento.
+export async function createOrder({ clienteName, items, address, postalCode, paymentMethod = 'Tarjeta de crédito', discountAmount = 0, shippingAmount = 0 }) {
+  // Calcula el total sumando cada producto (precio x cantidad), restando el
+  // descuento y sumando el envío — antes el envío se mostraba en el resumen
+  // de "Mi carrito" pero nunca quedaba reflejado en el pedido guardado.
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const total = Math.max(0, Math.round(subtotal - discountAmount));
+  const total = Math.max(0, Math.round(subtotal - discountAmount + shippingAmount));
   const trackingCode = `TRK-${Date.now()}`; // número de seguimiento único, basado en la hora actual
 
   // Crea el pedido principal.
-  await apiFetch('/orden', {
+  const order = await apiFetch('/orden', {
     method: 'POST',
     body: JSON.stringify({
       cliente: clienteName,
@@ -123,6 +125,7 @@ export async function createOrder({ clienteName, items, address, postalCode, pay
       metodo_pago: paymentMethod,
       total,
       descuento: discountAmount,
+      costo_envio: shippingAmount,
       direccion_envio: address ?? '',
       codigo_postal: postalCode ?? '',
       estado_orden: 'Pendiente', // todo pedido nuevo arranca así
@@ -141,6 +144,10 @@ export async function createOrder({ clienteName, items, address, postalCode, pay
       subtotal: item.price * item.qty,
     }),
   })));
+
+  // Se devuelve para que quien llamó pueda mostrar una confirmación
+  // (número de pedido / de seguimiento) sin tener que volver a pedirlo.
+  return { id: `#ORD-${order.id}`, trackingCode, total };
 }
 
 // Trae los pedidos de un cliente, con todo el detalle, ordenados del más

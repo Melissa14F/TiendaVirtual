@@ -12,6 +12,9 @@ export default function DescuentoAdmin({ discounts, setDiscounts, showToast }) {
   const [listError, setListError] = useState('');
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const filtered = discounts.filter(d => d.code.toLowerCase().includes(search.toLowerCase()));
 
   const del = async (id, code) => {
     setListError('');
@@ -77,11 +80,18 @@ export default function DescuentoAdmin({ discounts, setDiscounts, showToast }) {
     <div>
       <SectionHeader title={`Descuentos (${discounts.length})`} action={<AddBtn onClick={() => { setFormError(''); setAdding(true); }} label="Nuevo cupón" />} />
       {listError && <p className="adm-form-error">{listError}</p>}
+
+      {/* Search */}
+      <div className="adm-search-wrap">
+        <svg className="adm-search-icon icon icon-14 icon-sw-2_5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar cupones..." className="adm-search-input" />
+      </div>
+
       <div className="adm-panel">
         <table className="adm-table">
           <thead><tr><Th>Código</Th><Th>Descuento</Th><Th>Mín. compra</Th><Th>Usos</Th><Th>Vence</Th><Th>Estado</Th><Th>Acciones</Th></tr></thead>
           <tbody>
-            {discounts.map((d, i) => (
+            {filtered.map((d, i) => (
               <tr key={d.id} className={i > 0 ? 'adm-td-row' : ''}>
                 <Td><code className="adm-discount-code">{d.code}</code></Td>
                 <Td><span className="adm-discount-value">{d.type === 'porcentaje' ? `${d.value}%` : `$${d.value}`}</span></Td>

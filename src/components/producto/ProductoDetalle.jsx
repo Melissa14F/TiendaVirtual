@@ -12,30 +12,38 @@ const BADGE_CLASS = {
 
 // Vista de detalle de un producto: imagen grande, descripción, selector
 // de cantidad, y los botones de "Agregar al carrito" / "Comprar ahora".
-export default function ProductoDetalle({ product, userId, onBack, onAddToCart, onBuyNow, isFavorite, onToggleFavorite }) {
+export default function ProductoDetalle({ product, userId, onBack, onAddToCart, onBuyNow, onViewOrders, isFavorite, onToggleFavorite }) {
   const [qty, setQty] = useState(1); // cantidad elegida
   const [showCheckoutForm, setShowCheckoutForm] = useState(false); // si se muestra el formulario de datos de envío
   const [buying, setBuying] = useState(false);
   const [buyError, setBuyError] = useState('');
+  const [confirmedOrder, setConfirmedOrder] = useState(null); // pedido recién creado, mientras se muestra su confirmación
 
   const discount = product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : 0;
   const outOfStock = product.stock === 'out';
   const maxQty = Math.max(product.stockQty, 1); // no deja elegir más cantidad de la que hay en stock
 
-  // Confirma la compra directa ("Comprar ahora") con los datos de envío
-  // ya definidos (sea porque el cliente los completó en el formulario, o
-  // porque ya los tenía guardados de antes).
+  // Confirma la compra directa ("Comprar ahora") con los datos de envío ya
+  // definidos (sea porque el cliente los completó en el formulario, o
+  // porque ya los tenía guardados de antes). El modal se queda abierto
+  // mostrando la confirmación en vez de navegar en silencio.
   const placeOrderWithDetails = async (orderDetails) => {
     setBuying(true);
     setBuyError('');
     try {
-      await onBuyNow(product, qty, orderDetails);
+      const order = await onBuyNow(product, qty, orderDetails);
       setShowCheckoutForm(false);
+      setConfirmedOrder({ ...order, items: [{ ...product, qty }] });
     } catch (err) {
       setBuyError(err.message);
     } finally {
       setBuying(false);
     }
+  };
+
+  const dismissCheckout = () => {
+    setShowCheckoutForm(false);
+    setConfirmedOrder(null);
   };
 
   // onBuyNow itself redirects to login when nobody's signed in — no point
@@ -137,14 +145,16 @@ export default function ProductoDetalle({ product, userId, onBack, onAddToCart, 
         </div>
       </div>
 
-      {/* Formulario de datos de envío, solo aparece cuando hace falta (ver handleBuyNowClick) */}
-      {showCheckoutForm && (
+      {/* Formulario de datos de envío (ver handleBuyNowClick), o su confirmación una vez creado el pedido */}
+      {(showCheckoutForm || confirmedOrder) && (
         <CheckoutModal
           userId={userId}
           total={product.price * qty}
           submitting={buying}
           error={buyError}
-          onClose={() => setShowCheckoutForm(false)}
+          confirmedOrder={confirmedOrder}
+          onClose={dismissCheckout}
+          onViewOrders={() => { dismissCheckout(); onViewOrders(); }}
           onConfirm={placeOrderWithDetails}
         />
       )}

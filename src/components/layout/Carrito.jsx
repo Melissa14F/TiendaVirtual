@@ -17,25 +17,32 @@ export default function Carrito() {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false); // si se muestra el formulario de datos de envío
   const [checkingOut, setCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState('');
+  const [confirmedOrder, setConfirmedOrder] = useState(null); // pedido recién creado, mientras se muestra su confirmación
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
   // Confirma la compra: valida stock real, crea el pedido y descuenta
-  // stock (ver checkoutService.placeOrder), luego vacía el carrito y
-  // manda al cliente a "Mis pedidos" para que vea la orden recién creada.
+  // stock (ver checkoutService.placeOrder). El carrito se vacía en el
+  // momento (el pedido ya quedó creado), pero el modal se queda abierto
+  // mostrando la confirmación — recién navega a "Mis pedidos" cuando el
+  // cliente lo elige explícitamente (ver onViewOrders más abajo).
   const confirmCheckout = async (orderDetails) => {
     setCheckingOut(true);
     setCheckoutError('');
     try {
-      await placeOrder({ clienteName: userName, items, orderDetails });
+      const order = await placeOrder({ clienteName: userName, items, orderDetails });
+      setConfirmedOrder({ ...order, items });
       clearCart();
       closeCart();
-      setShowCheckoutForm(false);
-      navigate('/cuenta');
     } catch (err) {
       setCheckoutError(err.message);
     } finally {
       setCheckingOut(false);
     }
+  };
+
+  const dismissCheckout = () => {
+    setShowCheckoutForm(false);
+    setConfirmedOrder(null);
   };
 
   // Once the client already has shipping info on file, the form only
@@ -113,14 +120,16 @@ export default function Carrito() {
         )}
       </div>
 
-      {/* Formulario de datos de envío, solo aparece cuando hace falta */}
-      {showCheckoutForm && (
+      {/* Formulario de datos de envío, o su confirmación una vez creado el pedido */}
+      {(showCheckoutForm || confirmedOrder) && (
         <CheckoutModal
           userId={userId}
           total={total}
           submitting={checkingOut}
           error={checkoutError}
-          onClose={() => setShowCheckoutForm(false)}
+          confirmedOrder={confirmedOrder}
+          onClose={dismissCheckout}
+          onViewOrders={() => { dismissCheckout(); navigate('/cuenta'); }}
           onConfirm={confirmCheckout}
         />
       )}

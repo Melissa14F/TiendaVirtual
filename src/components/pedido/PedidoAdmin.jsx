@@ -6,6 +6,13 @@ export default function PedidoAdmin({ orders, setOrders, statuses, showToast }) 
   const [expanded, setExpanded] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
   const [errorById, setErrorById] = useState({});
+  const [search, setSearch] = useState('');
+
+  const filtered = orders.filter(o =>
+    o.displayId.toLowerCase().includes(search.toLowerCase()) ||
+    o.customer.toLowerCase().includes(search.toLowerCase()) ||
+    (o.tracking ?? '').toLowerCase().includes(search.toLowerCase())
+  );
 
   // The dropdown offers whatever's actually configured in "Estados de
   // pedido" — an order's own current status is always kept as an option
@@ -30,6 +37,13 @@ export default function PedidoAdmin({ orders, setOrders, statuses, showToast }) 
   return (
     <div>
       <SectionHeader title={`Pedidos (${orders.length})`} />
+
+      {/* Search */}
+      <div className="adm-search-wrap">
+        <svg className="adm-search-icon icon icon-14 icon-sw-2_5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar por orden, cliente o seguimiento..." className="adm-search-input" />
+      </div>
+
       <div className="adm-panel">
         <table className="adm-table">
           <thead>
@@ -38,7 +52,7 @@ export default function PedidoAdmin({ orders, setOrders, statuses, showToast }) 
             </tr>
           </thead>
           <tbody>
-            {orders.map((o, i) => {
+            {filtered.map((o, i) => {
               const isOpen = expanded === o.id;
               return (
                 <Fragment key={o.id}>

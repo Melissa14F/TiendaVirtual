@@ -30,6 +30,12 @@ export default function UsuarioAdmin({ users, setUsers, showToast }) {
   const [listError, setListError] = useState('');
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const filtered = users.filter(u =>
+    u.name.toLowerCase().includes(search.toLowerCase()) ||
+    u.email.toLowerCase().includes(search.toLowerCase())
+  );
 
   const del = async (id, name) => {
     setListError('');
@@ -108,11 +114,18 @@ export default function UsuarioAdmin({ users, setUsers, showToast }) {
       <SectionHeader title={`Usuarios (${users.length})`} action={<AddBtn onClick={() => { setFormError(''); setAdding(true); }} label="Nuevo usuario" />} />
       <p className="adm-form-hint">Solo el administrador principal puede crear cuentas y gestionar sus permisos.</p>
       {listError && <p className="adm-form-error">{listError}</p>}
+
+      {/* Search */}
+      <div className="adm-search-wrap">
+        <svg className="adm-search-icon icon icon-14 icon-sw-2_5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar usuarios..." className="adm-search-input" />
+      </div>
+
       <div className="adm-panel">
         <table className="adm-table">
           <thead><tr><Th>Nombre</Th><Th>Correo</Th><Th>Rol</Th><Th>Activo</Th><Th>Acciones</Th></tr></thead>
           <tbody>
-            {users.map((u, i) => (
+            {filtered.map((u, i) => (
               <tr key={u.id} className={i > 0 ? 'adm-td-row' : ''}>
                 <Td><span className="adm-text-strong">{u.name}</span></Td>
                 <Td className="adm-text-muted">{u.email}</Td>
