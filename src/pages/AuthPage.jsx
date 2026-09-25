@@ -52,16 +52,16 @@ export default function AuthPage() {
             </h2>
             <p className="av-brand-desc">
               {mode === 'login'
-                ? 'Ingresá para acceder al panel de administración y gestionar tu tienda.'
-                : 'Creá tu cuenta de administrador para gestionar productos, categorías y más.'}
+                ? 'Ingresá para ver tus pedidos, tus favoritos y seguir comprando.'
+                : 'Creá tu cuenta para comprar más rápido y hacer seguimiento de tus pedidos.'}
             </p>
           </div>
 
           <div className="av-benefits-wrap">
             {[
-              { icon: <svg className="icon icon-15" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>, text: 'Gestión completa de productos' },
-              { icon: <svg className="icon icon-15" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>, text: 'Administración de cupones y descuentos' },
-              { icon: <svg className="icon icon-15" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>, text: 'Control de anuncios y carrusel' },
+              { icon: <svg className="icon icon-15" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>, text: 'Seguimiento de tus pedidos en tiempo real' },
+              { icon: <svg className="icon icon-15" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>, text: 'Favoritos guardados y compra más rápida' },
+              { icon: <svg className="icon icon-15" viewBox="0 0 24 24"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12.58V2h10.58l8.01 8.01a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>, text: 'Ofertas y cupones exclusivos' },
             ].map((b) => (
               <div key={b.text} className="av-benefit-row">
                 <div className="av-benefit-icon-box">{b.icon}</div>

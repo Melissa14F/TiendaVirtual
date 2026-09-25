@@ -47,6 +47,12 @@
   border-radius: 7px;
   font-size: 18px;
   line-height: 1;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.chk-close:hover {
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .chk-loading {
@@ -81,9 +87,7 @@
   font-size: 13.5px;
   color: var(--text);
   background: var(--bg);
-  outline: none;
-  font-family: 'Inter', sans-serif;
-}
+  outline: none;}
 
 .chk-input:focus {
   border-color: var(--brand);
@@ -127,9 +131,7 @@
   background: #fff;
   border-radius: 8px;
   font-size: 13.5px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-}
+  cursor: pointer;}
 
 .chk-btn-primary {
   padding: 10px 22px;
@@ -139,9 +141,7 @@
   border-radius: 8px;
   font-weight: 700;
   font-size: 14px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: background 0.2s;
+  cursor: pointer;  transition: background 0.2s;
 }
 
 .chk-btn-primary:hover {
@@ -151,4 +151,98 @@
 .chk-btn-primary:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+/* ---- Success view (post-purchase confirmation) ---- */
+.chk-success-body {
+  padding: 28px 22px 22px;
+  text-align: center;
+}
+
+.chk-success-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chk-success-title {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.chk-success-sub {
+  margin: 0 0 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.chk-success-items {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.chk-success-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chk-success-item-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.chk-success-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.chk-success-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chk-success-item-qty {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.chk-success-item-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.chk-success-body .chk-total-row {
+  text-align: left;
+}
+
+.chk-success-body .chk-actions {
+  justify-content: center;
 }

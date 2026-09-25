@@ -20,6 +20,7 @@ export default function ClienteCarrito({ items, userId, onChangeQty, onRemove, c
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [checkingOut, setCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState('');
+  const [confirmedOrder, setConfirmedOrder] = useState(null); // pedido recién creado, mientras se muestra su confirmación
 
   useEffect(() => {
     let cancelled = false;
@@ -47,14 +48,19 @@ export default function ClienteCarrito({ items, userId, onChangeQty, onRemove, c
     setCheckingOut(true);
     setCheckoutError('');
     try {
-      await onCheckout(discount, orderDetails, appliedDiscount?.id);
+      const order = await onCheckout(discount, shipping, orderDetails, appliedDiscount?.id);
       setShowCheckoutForm(false);
-      onOrderPlaced();
+      setConfirmedOrder({ ...order, items });
     } catch (err) {
       setCheckoutError(err.message);
     } finally {
       setCheckingOut(false);
     }
+  };
+
+  const dismissCheckout = () => {
+    setShowCheckoutForm(false);
+    setConfirmedOrder(null);
   };
 
   // The form only shows up once (the first purchase) — once the client
@@ -66,7 +72,7 @@ export default function ClienteCarrito({ items, userId, onChangeQty, onRemove, c
     else setShowCheckoutForm(true);
   };
 
-  if (items.length === 0) return (
+  if (items.length === 0 && !confirmedOrder) return (
     <div className="ca-cart-empty">
       <div className="ca-cart-empty-icon-box">
         <svg className="icon icon-32 icon-sw-1_5 icon-stroke-border" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -163,13 +169,15 @@ export default function ClienteCarrito({ items, userId, onChangeQty, onRemove, c
         </div>
       </div>
 
-      {showCheckoutForm && (
+      {(showCheckoutForm || confirmedOrder) && (
         <CheckoutModal
           userId={userId}
           total={finalTotal}
           submitting={checkingOut}
           error={checkoutError}
-          onClose={() => setShowCheckoutForm(false)}
+          confirmedOrder={confirmedOrder}
+          onClose={dismissCheckout}
+          onViewOrders={() => { dismissCheckout(); onOrderPlaced(); }}
           onConfirm={placeOrderWithDetails}
         />
       )}

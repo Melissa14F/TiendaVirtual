@@ -39,13 +39,18 @@ export default function CuentaPage() {
     return () => { cancelled = true; };
   }, [userName, ordersRefreshKey]);
 
-  // Confirma la compra del carrito completo (con el cupón aplicado, si había uno).
-  const handleCheckout = async (discountAmount = 0, orderDetails, discountId) => {
-    await placeOrder({ clienteName: userName, items: cartItems, discountAmount, orderDetails, discountId });
+  // Confirma la compra del carrito completo (con el cupón aplicado, si
+  // había uno, y el envío ya sumado al total). Devuelve el pedido creado
+  // para que ClienteCarrito pueda mostrar su confirmación antes de pasar
+  // a "Mis pedidos".
+  const handleCheckout = async (discountAmount = 0, shippingAmount = 0, orderDetails, discountId) => {
+    const order = await placeOrder({ clienteName: userName, items: cartItems, discountAmount, shippingAmount, orderDetails, discountId });
     clearCart();
+    return order;
   };
 
-  // Refresca "Mis pedidos" y muestra esa pestaña una vez que la compra ya se confirmó.
+  // Refresca "Mis pedidos" y muestra esa pestaña — se llama cuando el
+  // cliente elige "Ver mis pedidos" desde la confirmación de compra.
   const handleOrderPlaced = () => {
     setOrdersRefreshKey(k => k + 1);
     setTab('orders');

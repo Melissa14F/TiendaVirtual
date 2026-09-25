@@ -119,6 +119,12 @@ export default function BannerAdmin({ banners, setBanners, showToast }) {
   const [resizingImage, setResizingImage] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const filtered = banners.filter(b =>
+    b.title.toLowerCase().includes(search.toLowerCase()) ||
+    (b.subtitle ?? '').toLowerCase().includes(search.toLowerCase())
+  );
 
   const del = async (id, title) => {
     setDeleting(true);
@@ -217,13 +223,21 @@ export default function BannerAdmin({ banners, setBanners, showToast }) {
   return (
     <div>
       <SectionHeader title={`Anuncios del carrusel (${banners.length})`} action={<AddBtn onClick={() => { setFormError(''); setImageError(''); setAdding(true); }} label="Nuevo anuncio" />} />
+
+      {/* Search */}
+      <div className="adm-search-wrap">
+        <svg className="adm-search-icon icon icon-14 icon-sw-2_5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar anuncios..." className="adm-search-input" />
+      </div>
+
       <div className="adm-banner-list">
-        {banners.map((b, i) => (
+        {filtered.map((b) => (
           <div key={b.id} className="adm-banner-card">
-            {/* Order controls */}
+            {/* Order controls — el número siempre refleja la posición real en
+                el carrusel, aunque la búsqueda esté filtrando la lista. */}
             <div className="adm-banner-order-controls">
               <IconBtn onClick={() => move(b.id, -1)} title="Subir"><svg className="icon icon-14 icon-sw-2_5" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></IconBtn>
-              <span className="adm-banner-order-num">{i + 1}</span>
+              <span className="adm-banner-order-num">{banners.findIndex(x => x.id === b.id) + 1}</span>
               <IconBtn onClick={() => move(b.id, 1)} title="Bajar"><svg className="icon icon-14 icon-sw-2_5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></IconBtn>
             </div>
             {/* Image preview */}

@@ -1,9 +1,7 @@
 /* ---- ClientAccount (ca-) ---- */
 .ca-page {
   min-height: calc(100vh - 120px);
-  background: var(--bg);
-  font-family: 'Inter', sans-serif;
-}
+  background: var(--bg);}
 
 .ca-orders-status {
   text-align: center;
@@ -64,6 +62,12 @@
   border-radius: 7px;
   font-size: 18px;
   line-height: 1;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.ca-modal-close:hover {
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .ca-modal-body {
@@ -262,9 +266,7 @@
   gap: 7px;
   padding: 12px 20px;
   border: none;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  background: transparent;
+  cursor: pointer;  background: transparent;
   font-size: 13.5px;
   font-weight: 500;
   color: var(--text-muted);
@@ -280,6 +282,10 @@
     padding: 10px 14px;
     font-size: 13px;
   }
+}
+
+.ca-tab:hover:not(.ca-tab--active) {
+  color: var(--text);
 }
 
 .ca-tab--active {
@@ -605,8 +611,11 @@
   color: var(--brand);
   font-size: 13px;
   font-weight: 600;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  cursor: pointer;  transition: background 0.15s;
+}
+
+.ca-btn-outline:hover:not(:disabled) {
+  background: rgba(91, 42, 134, 0.06);
 }
 
 .ca-btn-ghost {
@@ -617,8 +626,12 @@
   color: var(--text-muted);
   font-size: 13px;
   font-weight: 600;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  cursor: pointer;  transition: border-color 0.15s, color 0.15s;
+}
+
+.ca-btn-ghost:hover:not(:disabled) {
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .ca-btn-danger-outline {
@@ -629,8 +642,11 @@
   color: #DC2626;
   font-size: 13px;
   font-weight: 600;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  cursor: pointer;  transition: background 0.15s;
+}
+
+.ca-btn-danger-outline:hover:not(:disabled) {
+  background: #FEF2F2;
 }
 
 .ca-btn-outline:disabled,
@@ -833,6 +849,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ca-qty-btn:hover:not(:disabled) {
+  background: #fff;
+  color: var(--brand);
 }
 
 .ca-qty-btn:disabled {
@@ -860,12 +882,14 @@
   cursor: pointer;
   color: var(--danger);
   font-size: 13px;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  padding: 0;
+  font-weight: 600;  padding: 0;
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.ca-cart-remove-btn:hover {
+  text-decoration: underline;
 }
 
 .ca-cart-item-total-col {
@@ -971,6 +995,7 @@
 
 .ca-coupon-input:focus {
   border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(91, 42, 134, 0.08);
 }
 
 .ca-coupon-input--applied {
@@ -985,9 +1010,7 @@
   border-radius: 8px;
   font-size: 13px;
   font-weight: 700;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-}
+  cursor: pointer;}
 
 .ca-coupon-apply-btn--applied {
   background: #DCFCE7;
@@ -1036,9 +1059,7 @@
   border-radius: 10px;
   font-weight: 700;
   font-size: 15px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: background 0.2s;
+  cursor: pointer;  transition: background 0.2s;
 }
 
 .ca-checkout-btn:hover {
@@ -1121,8 +1142,16 @@
   border-radius: 8px;
   font-weight: 700;
   font-size: 13.5px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  cursor: pointer;  transition: background 0.15s;
+}
+
+.ca-profile-save-btn:hover:not(:disabled) {
+  background: var(--brand-hover);
+}
+
+.ca-profile-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .ca-profile-saved-msg {
@@ -1140,8 +1169,11 @@
   border-radius: 8px;
   font-weight: 700;
   font-size: 13.5px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  cursor: pointer;  transition: background 0.15s;
+}
+
+.ca-profile-change-pass-btn:hover {
+  background: rgba(91, 42, 134, 0.06);
 }
 
 .ca-field-wrap {
@@ -1153,9 +1185,7 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 6px;
-  font-family: 'Inter', sans-serif;
-}
+  margin-bottom: 6px;}
 
 .ca-field-input {
   width: 100%;
@@ -1166,9 +1196,7 @@
   font-size: 13.5px;
   color: var(--text);
   background: var(--bg);
-  outline: none;
-  font-family: 'Inter', sans-serif;
-}
+  outline: none;}
 
 .ca-field-input:focus {
   border-color: var(--brand);
