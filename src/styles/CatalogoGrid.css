@@ -47,13 +47,21 @@
   color: var(--text);
   font-weight: 600;
   font-size: 13px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  cursor: pointer;  transition: border-color 0.15s, background 0.15s;
+}
+
+.cv-filter-btn:hover:not(.cv-filter-btn--active) {
+  border-color: var(--brand);
+  background: var(--bg);
 }
 
 .cv-filter-btn--active {
   background: var(--brand);
   color: #fff;
+}
+
+.cv-filter-btn--active:hover {
+  background: var(--brand-hover);
 }
 
 .cv-sort-select {
@@ -65,6 +73,12 @@
   background: #fff;
   cursor: pointer;
   outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cv-sort-select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(91, 42, 134, 0.08);
 }
 
 .cv-sort-select--desktop {
@@ -113,9 +127,7 @@
   font-weight: 700;
   font-size: 15px;
   cursor: pointer;
-  margin-top: 8px;
-  font-family: 'Inter', sans-serif;
-}
+  margin-top: 8px;}
 
 .cv-filters-header {
   display: flex;
@@ -138,6 +150,12 @@
   color: var(--blue);
   font-weight: 600;
   padding: 0;
+  transition: color 0.15s;
+}
+
+.cv-clear-btn:hover {
+  color: var(--blue-hover);
+  text-decoration: underline;
 }
 
 .cv-filter-section {
@@ -171,6 +189,12 @@
   outline: none;
   width: 0;
   background: var(--bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cv-price-input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(91, 42, 134, 0.08);
 }
 
 .cv-price-sep {
@@ -306,9 +330,7 @@
   color: var(--text);
   font-size: 13px;
   font-weight: 600;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: border-color 0.2s, color 0.2s;
+  cursor: pointer;  transition: border-color 0.2s, color 0.2s;
 }
 
 .cv-page-btn:hover:not(:disabled) {

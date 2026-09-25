@@ -92,15 +92,18 @@ function ProductSection({ title, subtitle, fetcher, errorMsg, onSeeAll, alt, isF
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
+    setError(null);
     fetcher()
       .then(data => { if (!cancelled) setProducts(data); })
       .catch(err => { if (!cancelled) setError(err.message); })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
-  }, [fetcher]);
+  }, [fetcher, retryKey]);
 
   return (
     <section className={`app-section ${alt ? 'app-section--alt' : ''}`}>
@@ -113,7 +116,12 @@ function ProductSection({ title, subtitle, fetcher, errorMsg, onSeeAll, alt, isF
           <button onClick={onSeeAll} className="app-see-all-btn">Ver todo →</button>
         </div>
         {loading ? <div className="app-status">Cargando productos…</div> :
-         error ? <div className="app-status app-status--error">{errorMsg}</div> :
+         error ? (
+           <div className="app-status app-status--error">
+             {errorMsg}
+             <button onClick={() => setRetryKey(k => k + 1)} className="app-status-retry-btn">Reintentar</button>
+           </div>
+         ) :
          <div className="app-product-grid">
            {products.map(p => (
              <ProductCard key={p.id} product={p} isFavorite={isFavorite(p.name)} onToggleFavorite={onToggleFavorite} />

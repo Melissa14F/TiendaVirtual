@@ -2,9 +2,7 @@
 .adm-root {
   min-height: 100vh;
   display: flex;
-  background: #F1F5F9;
-  font-family: 'Inter', sans-serif;
-}
+  background: #F1F5F9;}
 
 .adm-sidebar {
   width: 240px;
@@ -70,7 +68,7 @@
 }
 
 .adm-sidebar-subtitle {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
   font-size: 11px;
   font-weight: 500;
 }
@@ -87,6 +85,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.adm-sidebar-close:hover {
+  background: rgba(255, 255, 255, 0.22);
 }
 
 .adm-sidebar-nav {
@@ -108,9 +111,7 @@
   background: transparent;
   color: rgba(255, 255, 255, 0.55);
   font-size: 13.5px;
-  font-weight: 400;
-  font-family: 'Inter', sans-serif;
-  text-align: left;
+  font-weight: 400;  text-align: left;
   text-decoration: none;
   width: 100%;
   box-sizing: border-box;
@@ -153,9 +154,7 @@
   background: rgba(239, 68, 68, 0.12);
   color: rgba(239, 68, 68, 0.8);
   font-size: 13.5px;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-  text-decoration: none;
+  font-weight: 500;  text-decoration: none;
   transition: all 0.15s;
 }
 
@@ -217,6 +216,12 @@
   justify-content: center;
   gap: 3.5px;
   cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.adm-hamburger:hover {
+  background: var(--bg);
+  border-color: #CBD5E1;
 }
 
 .adm-hamburger-bar {
@@ -294,9 +299,7 @@
   cursor: pointer;
   font-size: 13.5px;
   font-weight: 500;
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  transition: background 0.15s;
+  color: var(--text);  transition: background 0.15s;
 }
 
 .adm-topbar-user-menu-item:hover {
@@ -362,9 +365,7 @@
   background: none;
   color: var(--danger);
   font-weight: 600;
-  font-size: 13px;
-  font-family: 'Inter', sans-serif;
-  cursor: pointer;
+  font-size: 13px;  cursor: pointer;
   transition: all 0.2s;
 }
 
@@ -397,12 +398,7 @@
   justify-content: center;
 }
 
-/* Note: the brand variant intentionally has no background tint — it
-   mirrors the previous inline `color + '18'` concatenation, which is
-   not a valid CSS color when `color` is a var() reference, so the
-   background silently fell back to transparent. Kept as-is to avoid
-   changing the rendered design. */
-.adm-kpi-icon-box--brand { color: var(--brand); }
+.adm-kpi-icon-box--brand { background: #5B2A8618; color: var(--brand); }
 .adm-kpi-icon-box--blue { background: #2563EB18; color: #2563EB; }
 .adm-kpi-icon-box--purple { background: #7C3AED18; color: #7C3AED; }
 .adm-kpi-icon-box--green { background: #16A34A18; color: #16A34A; }
@@ -1170,9 +1166,7 @@
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: background 0.2s;
+  cursor: pointer;  transition: background 0.2s;
 }
 
 .adm-add-btn:hover {
@@ -1214,9 +1208,7 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 6px;
-  font-family: 'Inter', sans-serif;
-}
+  margin-bottom: 6px;}
 
 .adm-form-input {
   width: 100%;
@@ -1227,9 +1219,7 @@
   font-size: 13.5px;
   color: var(--text);
   background: var(--bg);
-  outline: none;
-  font-family: 'Inter', sans-serif;
-}
+  outline: none;}
 
 .adm-form-input:focus {
   border-color: var(--brand);
@@ -1261,8 +1251,13 @@
   background: #fff;
   border-radius: 8px;
   font-size: 13.5px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  cursor: pointer;  transition: border-color 0.15s, color 0.15s;
+  color: var(--text);
+}
+
+.adm-btn-secondary:hover {
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .adm-btn-danger {
@@ -1273,9 +1268,7 @@
   border-radius: 8px;
   font-size: 13.5px;
   font-weight: 700;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: background 0.2s;
+  cursor: pointer;  transition: background 0.2s;
 }
 
 .adm-btn-danger:hover {
@@ -1344,6 +1337,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.adm-modal-close:hover {
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
 .adm-modal-body {
@@ -1358,9 +1357,7 @@
   border-radius: 8px;
   font-weight: 700;
   font-size: 14px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: background 0.2s;
+  cursor: pointer;  transition: background 0.2s;
 }
 
 .adm-save-btn:hover {
@@ -1391,12 +1388,11 @@
   font-size: 13.5px;
   color: var(--text);
   background: #fff;
-  outline: none;
-  font-family: 'Inter', sans-serif;
-}
+  outline: none;}
 
 .adm-search-input:focus {
   border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(91, 42, 134, 0.08);
 }
 
 .adm-cell-thumb-row {
@@ -1450,6 +1446,10 @@
   position: relative;
   transition: background 0.2s;
   background: var(--border);
+}
+
+.adm-toggle:hover:not(.adm-toggle--on):not(.adm-toggle--on-green) {
+  background: #CBD5E1;
 }
 
 .adm-toggle--on {

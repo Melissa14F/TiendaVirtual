@@ -11,6 +11,12 @@ export default function CategoriaAdmin({ categories, setCategories, showToast })
   const [listError, setListError] = useState('');
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const filtered = categories.filter(c =>
+    c.name.toLowerCase().includes(search.toLowerCase()) ||
+    (c.description ?? '').toLowerCase().includes(search.toLowerCase())
+  );
 
   const del = async (id, name) => {
     setListError('');
@@ -79,11 +85,18 @@ export default function CategoriaAdmin({ categories, setCategories, showToast })
     <div>
       <SectionHeader title={`Categorías (${categories.length})`} action={<AddBtn onClick={() => { setFormError(''); setAdding(true); }} label="Nueva categoría" />} />
       {listError && <p className="adm-form-error">{listError}</p>}
+
+      {/* Search */}
+      <div className="adm-search-wrap">
+        <svg className="adm-search-icon icon icon-14 icon-sw-2_5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar categorías..." className="adm-search-input" />
+      </div>
+
       <div className="adm-panel">
         <table className="adm-table">
           <thead><tr><Th>Nombre</Th><Th>Descripción</Th><Th>Productos</Th><Th>Activa</Th><Th>Acciones</Th></tr></thead>
           <tbody>
-            {categories.map((cat, i) => (
+            {filtered.map((cat, i) => (
               <tr key={cat.id} className={i > 0 ? 'adm-td-row' : ''}>
                 <Td><span className="adm-text-strong">{cat.name}</span></Td>
                 <Td className="adm-text-muted">{cat.description || '—'}</Td>

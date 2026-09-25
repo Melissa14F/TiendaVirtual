@@ -57,12 +57,6 @@ export default function LoginForm({ onSuccess }) {
         </div>
       )}
 
-      <div className="av-forgot-row">
-        <button type="button" className="av-forgot-btn">
-          ¿Olvidaste tu contraseña?
-        </button>
-      </div>
-
       <PrimaryBtn disabled={submitting}>{submitting ? 'Verificando…' : 'Iniciar sesión →'}</PrimaryBtn>
 
       {/* Credenciales de prueba visibles para facilitar la demo/pruebas */}

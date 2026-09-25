@@ -37,4 +37,10 @@
   font-weight: 600;
   font-size: 14px;
   text-decoration: none;
+  transition: background 0.15s;
+  display: inline-block;
+}
+
+.nf-link:hover {
+  background: var(--brand-hover);
 }

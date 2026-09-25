@@ -37,12 +37,13 @@ export default function ProductoPage() {
     addToCart(p, qty);
   };
 
-  // Buy-now bypasses the cart entirely — a single-item order for
-  // whatever quantity was picked on the product page.
+  // Buy-now bypasses the cart entirely — a single-item order for whatever
+  // quantity was picked on the product page. Returns the created order so
+  // ProductoDetalle can show its confirmation instead of navigating right
+  // away; navigation only happens once the client asks for it (onViewOrders).
   const handleBuyNow = async (p, qty, orderDetails) => {
     if (userRole !== 'client') { navigate('/login'); return; }
-    await placeOrder({ clienteName: userName, items: [{ ...p, qty }], orderDetails });
-    navigate('/cuenta');
+    return placeOrder({ clienteName: userName, items: [{ ...p, qty }], orderDetails });
   };
 
   if (loading) return <div className="app-status">Cargando producto…</div>;
@@ -55,6 +56,7 @@ export default function ProductoPage() {
       onBack={() => navigate(-1)}
       onAddToCart={handleAddToCart}
       onBuyNow={handleBuyNow}
+      onViewOrders={() => navigate('/cuenta')}
       isFavorite={isFavorite(product.name)}
       onToggleFavorite={onToggleFavorite}
     />

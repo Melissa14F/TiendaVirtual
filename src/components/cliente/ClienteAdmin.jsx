@@ -13,6 +13,12 @@ export default function ClienteAdmin({ clientes, setClientes, showToast }) {
   const [listError, setListError] = useState('');
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const filtered = clientes.filter(c =>
+    `${c.name} ${c.lastName}`.toLowerCase().includes(search.toLowerCase()) ||
+    c.email.toLowerCase().includes(search.toLowerCase())
+  );
 
   const del = async (id, name) => {
     setListError('');
@@ -82,11 +88,18 @@ export default function ClienteAdmin({ clientes, setClientes, showToast }) {
     <div>
       <SectionHeader title={`Clientes (${clientes.length})`} action={<AddBtn onClick={() => { setFormError(''); setAdding(true); }} label="Nuevo cliente" />} />
       {listError && <p className="adm-form-error">{listError}</p>}
+
+      {/* Search */}
+      <div className="adm-search-wrap">
+        <svg className="adm-search-icon icon icon-14 icon-sw-2_5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar clientes..." className="adm-search-input" />
+      </div>
+
       <div className="adm-panel">
         <table className="adm-table">
           <thead><tr><Th>Nombre</Th><Th>Correo</Th><Th>Teléfono</Th><Th>Dirección</Th><Th>Activo</Th><Th>Acciones</Th></tr></thead>
           <tbody>
-            {clientes.map((c, i) => (
+            {filtered.map((c, i) => (
               <tr key={c.id} className={i > 0 ? 'adm-td-row' : ''}>
                 <Td><span className="adm-text-strong">{c.name} {c.lastName}</span></Td>
                 <Td className="adm-text-muted">{c.email}</Td>

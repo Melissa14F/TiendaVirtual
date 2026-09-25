@@ -29,8 +29,17 @@ export default function ProductCard({ product, isFavorite, onToggleFavorite }) {
     addToCart(product, 1);
   };
 
+  const goToDetail = () => navigate(`/producto/${product.id}`);
+
   return (
-    <div onClick={() => navigate(`/producto/${product.id}`)} className="pc-card">
+    <div
+      onClick={goToDetail}
+      onKeyDown={e => { if (e.key === 'Enter') goToDetail(); }}
+      role="link"
+      tabIndex={0}
+      aria-label={product.name}
+      className="pc-card"
+    >
       {/* Imagen del producto, con la etiqueta, el badge de descuento y el aviso de "sin stock" superpuestos */}
       <div className="pc-image-wrap">
         <img src={product.image} alt={product.name} className="pc-image" />

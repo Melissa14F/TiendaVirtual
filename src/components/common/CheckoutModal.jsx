@@ -11,16 +11,25 @@ const PAYMENT_METHODS = ['Tarjeta de crédito', 'PSE', 'Efectivo contraentrega']
  * client's saved profile, but requires confirming (or editing) them here
  * before the order actually gets created, instead of silently reusing
  * whatever was last saved in "Mi perfil".
+ *
+ * Once `onConfirm` succeeds, the caller passes `confirmedOrder` back in
+ * and this same modal swaps from the form to a success view instead of
+ * just closing — the highest-stakes moment of the whole purchase flow
+ * shouldn't end in a silent redirect.
  */
-export default function CheckoutModal({ userId, total, submitting, error, onClose, onConfirm }) {
+export default function CheckoutModal({ userId, total, submitting, error, confirmedOrder, onClose, onViewOrders, onConfirm }) {
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [paymentMethod, setPaymentMethod] = useState(PAYMENT_METHODS[0]);
   const [loadingProfile, setLoadingProfile] = useState(true); // mientras trae los datos guardados del cliente
   const [formError, setFormError] = useState('');
 
-  // Al abrir el modal, precarga dirección y código postal desde el perfil del cliente (si ya los tiene guardados).
+  // Al abrir el modal, precarga dirección y código postal desde el perfil
+  // del cliente (si ya los tiene guardados). No hace falta cuando el
+  // modal arranca directo en la vista de confirmación (compra rápida con
+  // dirección ya guardada, sin pasar por el formulario).
   useEffect(() => {
+    if (confirmedOrder) return;
     let cancelled = false;
     getClienteById(userId)
       .then(data => {
@@ -49,6 +58,50 @@ export default function CheckoutModal({ userId, total, submitting, error, onClos
     await updateCliente(userId, { address: trimmedAddress, postalCode: trimmedPostalCode }).catch(() => {});
     onConfirm({ address: trimmedAddress, postalCode: trimmedPostalCode, paymentMethod });
   };
+
+  // El pedido ya se creó con éxito: se reemplaza el formulario por la
+  // confirmación en vez de cerrar el modal en silencio.
+  if (confirmedOrder) {
+    return (
+      <>
+        <div onClick={onClose} className="chk-overlay" />
+        <div className="chk-modal">
+          <div className="chk-success-body">
+            <div className="chk-success-icon">
+              <svg className="icon icon-24 icon-sw-2_5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
+            </div>
+            <h3 className="chk-success-title">¡Pedido confirmado!</h3>
+            <p className="chk-success-sub">
+              Pedido <strong>{confirmedOrder.id}</strong> · guardá el código de seguimiento <strong>{confirmedOrder.trackingCode}</strong> para consultarlo cuando quieras desde "Mis pedidos".
+            </p>
+
+            <div className="chk-success-items">
+              {confirmedOrder.items.map((item, i) => (
+                <div key={i} className="chk-success-item">
+                  <img src={item.image} alt={item.name} className="chk-success-item-img" />
+                  <div className="chk-success-item-info">
+                    <span className="chk-success-item-name">{item.name}</span>
+                    <span className="chk-success-item-qty">Cantidad: {item.qty}</span>
+                  </div>
+                  <span className="chk-success-item-price">${(item.price * item.qty).toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="chk-total-row">
+              <span>Total pagado</span>
+              <span className="chk-total-value">${confirmedOrder.total.toLocaleString()}</span>
+            </div>
+
+            <div className="chk-actions">
+              <button type="button" onClick={onClose} className="chk-btn-secondary">Seguir comprando</button>
+              <button type="button" onClick={onViewOrders} className="chk-btn-primary">Ver mis pedidos</button>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

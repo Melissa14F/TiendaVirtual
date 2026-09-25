@@ -181,6 +181,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cd-qty-btn:hover:not(:disabled) {
+  background: var(--bg);
+  color: var(--brand);
 }
 
 .cd-qty-btn:disabled {
@@ -210,6 +216,10 @@
   font-size: 12px;
   font-weight: 600;
   padding: 0;
+}
+
+.cd-remove-btn:hover {
+  text-decoration: underline;
 }
 
 .cd-footer {
